@@ -2,9 +2,11 @@ import gameBoard
 isRunning_g = False
 
 #TODO
+#contiune with local branch from https://www.youtube.com/watch?v=HVsySz-h9r4 @time 22:28
 #player one does not have a proper king check for jumps
-#Add lower case requirement for piece name
-#Add to upper case for kinged pieces
+#fix naming collision with player one and player two
+
+validCharcters = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z']
 
 
 def parseCommand(board,word, player, coords):
@@ -70,6 +72,41 @@ def processCommand(board, player, x1, y1, x2, y2):
         print("Invalid movement attempted")
         return 2
 
+def setupPlayerOneCharacter(board):
+    valid = False
+    while (not valid):
+        symm = input("What character will Player One be?  ")
+        found = False
+        for x in range(len(validCharcters)):
+            if validCharcters[x] == symm:
+                found = True
+
+        if found:
+            board.setPlayerTwoSymms(symm)
+            valid = True
+        else:
+            print("Please enter a lower case alphabetical character!")
+                
+
+def setupPlayerTwoCharacter(board):
+    valid = False
+    while (not valid):
+        symm = input("What character will Player Two be?  ")
+        found = False
+        for x in range(len(validCharcters)):
+            if validCharcters[x] == symm:
+                found = True
+
+        if found:
+            print(board.p1Piece)
+            print(symm)
+            if board.p1Piece == symm:
+                print("thats rude, dont try to steal player ones character")
+            else:
+                board.setPlayerOneSymms(symm)
+                valid = True
+        else:
+            print("Please enter a lower case alphabetical character!")
     
 
 
@@ -79,10 +116,12 @@ def main():
     curPTurn = p1
     board = gameBoard.GameBoard()
 
-    symm = input("What character will Player One be?  ")
-    board.setPlayerOneSymm(symm)
-    symm = input("What character will Player Two be?  ")
-    board.setPlayerTwoSymm(symm)
+    print("Welcome to checkers!")
+    print("Lets get you set up.")
+    setupPlayerOneCharacter(board)
+    print("in main %d", board.p1Piece)
+    setupPlayerTwoCharacter(board)
+    
     global isRunning_g
     isRunning_g = True
     curMsg = ""

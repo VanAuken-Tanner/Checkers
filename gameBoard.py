@@ -49,11 +49,13 @@ class GameBoard:
 
 #FUNCTIONS
 
-    def setPlayerOneSymm(self,word):
+    def setPlayerOneSymms(self,word):
         self.p1Piece = word
+        self.p1King = word.upper()
 
-    def setPlayerTwoSymm(self,word):
+    def setPlayerTwoSymms(self,word):
         self.p2Piece = word
+        self.p2King = word.upper()
 
     def announcePlayerSymms(self):
         print("Player One will be: %s" % self.p1Piece)
@@ -77,9 +79,9 @@ class GameBoard:
                 elif(self.gameBoard[x][y] == p2RegPiece):
                     symbol = self.p2Piece
                 elif(self.gameBoard[x][y] == p1KingPiece):
-                    symbol = self.p2Piece
+                    symbol = self.p1King
                 elif(self.gameBoard[x][y] == p2KingPiece):
-                    symbol = self.p2Piece
+                    symbol = self.p2King
                 else:
                     symbol = '?'
                 

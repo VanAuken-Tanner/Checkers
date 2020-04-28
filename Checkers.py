@@ -1,17 +1,19 @@
 import gameBoard
-
+isRunning_g = False
 
 #TODO
-#generic bug fixes insert more here
+#player one does not have a proper king check for jumps
 #Add lower case requirement for piece name
 #Add to upper case for kinged pieces
 
 
-def parseCommand(board,word, player, coords,isRunning):
+def parseCommand(board,word, player, coords):
     if(word == "x"):
-        isRunning = False
+        global isRunning_g
+        isRunning_g = False
+        return 1
     if(len(word) != 5):
-        print("Too many characters detected")
+        print("incorrect number of characters")
         return 0
     if(word[2] != '>'):
         print("Please separate your command with the > symbol")
@@ -62,6 +64,8 @@ def processCommand(board, player, x1, y1, x2, y2):
             print("Player tried to jump and it is a valid jump so lets mote them and remove the piece they jumped")
             board.jumpPiece(x1,y1,x2,y2, player)
             return 1
+        else:
+            return 2
     else:
         print("Invalid movement attempted")
         return 2
@@ -79,9 +83,10 @@ def main():
     board.setPlayerOneSymm(symm)
     symm = input("What character will Player Two be?  ")
     board.setPlayerTwoSymm(symm)
-    isRunning = True
+    global isRunning_g
+    isRunning_g = True
     curMsg = ""
-    while(isRunning):
+    while(isRunning_g):
         
         board.drawBoard()
         print()
@@ -97,7 +102,7 @@ def main():
 
         changeTurn = True
         coords = [0,0,0,0]
-        if(parseCommand(board, command, curPTurn, coords,isRunning)):
+        if(parseCommand(board, command, curPTurn, coords)):
             x1 = coords[0]
             y1 = coords[1]
             x2 = coords[2]
@@ -134,10 +139,10 @@ def main():
         result = board.isGameOver()
         if result == 1:
             print("Congratulations player one you have won the game")
-            isRunning = False
+            isRunning_g = False
         elif result == 2:
             print("Congratulations player two you have won the game")
-            isRunning = False
+            isRunning_g = False
 
 
         if(changeTurn):

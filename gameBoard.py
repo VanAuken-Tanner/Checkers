@@ -1,7 +1,7 @@
 
 nCols = 8
 nRows = 8
-
+empySpace = 0
 p1RegPiece = 1
 p2RegPiece = 2
 p1KingPiece = 3
@@ -21,8 +21,10 @@ jumpDownLeft_g = 3
 
 
 class GameBoard:
-    p1Piece = 'X'
-    p2Piece = 'O'   
+    p1Piece = 'x'
+    p1King = 'X'
+    p2Piece = 'o'   
+    p2King = 'O'
     blank = ' '
 
     # 1 = player 1
@@ -41,6 +43,7 @@ class GameBoard:
     [2,0,2,0,2,0,2,0]]
 
     vertSym = ['A', 'B', 'C', 'D', 'E','F','G','H']
+    vertSym2 = ['a', 'b', 'c', 'd', 'e','f','g','h']
     horzSym = ['1', '2', '3', '4', '5','6','7','8']
 
 
@@ -67,14 +70,18 @@ class GameBoard:
             for y in range(nCols):
                 symbol = '*'
                 
-                if(self.gameBoard[x][y] == 3):
-                    continue
-                elif(self.gameBoard[x][y] == 0):
+                if(self.gameBoard[x][y] == empySpace):
                     symbol = self.blank            
-                elif(self.gameBoard[x][y] == 1):
+                elif(self.gameBoard[x][y] == p1RegPiece):
                     symbol = self.p1Piece
-                elif(self.gameBoard[x][y] == 2):
+                elif(self.gameBoard[x][y] == p2RegPiece):
                     symbol = self.p2Piece
+                elif(self.gameBoard[x][y] == p1KingPiece):
+                    symbol = self.p2Piece
+                elif(self.gameBoard[x][y] == p2KingPiece):
+                    symbol = self.p2Piece
+                else:
+                    symbol = '?'
                 
 
 
@@ -91,6 +98,11 @@ class GameBoard:
         for x in range(len(self.vertSym)):
             if(word == self.vertSym[x]):
                 return len(self.vertSym) - (x + 1)
+        #im lazy and dont know to uppers yet
+        for x in range(len(self.vertSym2)):
+            if(word == self.vertSym2[x]):
+                return len(self.vertSym2) - (x + 1)
+
         return -1
 
 
@@ -166,7 +178,10 @@ class GameBoard:
         elif (y2 >= nCols):
             return False
         else:
-            return True
+            if self.gameBoard[x2][y2] == 0:
+                return True
+            else:
+                return False
 
 #Can this piece MOVE "down and right" on the board
     def canMoveDownLeft(self, x, y):
@@ -180,7 +195,10 @@ class GameBoard:
         elif (y2 < 0):
             return False
         else:
-            return True
+            if self.gameBoard[x2][y2] == 0:
+                return True
+            else:
+                return False
 
 #Can this piece MOVE "up and right" on the board
     def canMoveUpRight(self, x, y):
@@ -194,7 +212,10 @@ class GameBoard:
         elif (y2 >= nCols):
             return False
         else:
-            return True
+            if self.gameBoard[x2][y2] == 0:
+                return True
+            else:
+                return False
 
 #Can this piece MOVE "up and right" on the board
     def canMoveUpLeft(self, x, y):
@@ -208,7 +229,10 @@ class GameBoard:
         elif (y2 < 0):
             return False
         else:
-            return True
+            if self.gameBoard[x2][y2] == 0:
+                return True
+            else:
+                return False
 
 #Can this piece JUMP "down and right" on the board
     def canjumpDownRight(self, x, y, player):
@@ -225,7 +249,10 @@ class GameBoard:
         if not self.isEnemyPieceAt(player, x+1, y+1):
             return False
         else:
-            return True
+            if self.gameBoard[x2][y2] == 0:
+                return True
+            else:
+                return False
 
 #Can this piece JUMP "down and right" on the board
     def canjumpDownLeft(self, x, y, player):
@@ -242,7 +269,10 @@ class GameBoard:
         if not self.isEnemyPieceAt(player, x+1, y-1):
             return False
         else:
-            return True
+            if self.gameBoard[x2][y2] == 0:
+                return True
+            else:
+                return False
 
 #Can this piece JUMP "up and right" on the board
     def canjumpUpRight(self, x, y, player):
@@ -259,7 +289,10 @@ class GameBoard:
         if not self.isEnemyPieceAt(player, x-1, y+1):
             return False
         else:
-            return True
+            if self.gameBoard[x2][y2] == 0:
+                return True
+            else:
+                return False
 
 #Can this piece JUMP "up and right" on the board
     def canjumpUpLeft(self, x, y, player):
@@ -276,7 +309,10 @@ class GameBoard:
         if not self.isEnemyPieceAt(player, x-1, y-1):
             return False
         else:
-            return True
+            if self.gameBoard[x2][y2] == 0:
+                return True
+            else:
+                return False
 
     
 
@@ -404,12 +440,12 @@ class GameBoard:
         self.gameBoard[x1][y1] = 0
 
         if(player == p1):
-            if(x2 == 0 and self.gameBoard[x2][y2] == p1RegPiece):
+            if(x2 == 7 and self.gameBoard[x2][y2] == p1RegPiece):
                 self.gameBoard[x2][y2] = p1KingPiece
                 print("Kinging player 1 piece")
 
         if(player == p2 and self.gameBoard[x2][y2] == p2RegPiece):
-            if(x2 == 7):
+            if(x2 == 0):
                 self.gameBoard[x2][y2] = p2KingPiece
                 print("Kinging player 2 piece")
 
@@ -434,12 +470,12 @@ class GameBoard:
             print("something went terribly wrong... run... RUN!!!!")
 
         if(player == p1):
-            if(x2 == 0 and self.gameBoard[x2][y2] == p1RegPiece):
+            if(x2 == 7 and self.gameBoard[x2][y2] == p1RegPiece):
                 self.gameBoard[x2][y2] = p1KingPiece
                 print("Kinging player 1 piece")
 
         if(player == p2 and self.gameBoard[x2][y2] == p2RegPiece):
-            if(x2 == 7):
+            if(x2 == 0):
                 self.gameBoard[x2][y2] = p2KingPiece
                 print("Kinging player 2 piece")
 

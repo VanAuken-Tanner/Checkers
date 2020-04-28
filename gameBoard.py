@@ -490,14 +490,14 @@ class GameBoard:
             if sourcePiece == p1RegPiece :
                 return (self.canjumpDownLeft(x,y,player) or self.canjumpDownRight(x,y,player))
             elif sourcePiece == p1KingPiece :
-                return (self.canjumpUpLeft(x,y,player) or self.canjumpUpRight(x,y,player) or self.canjumpDownRight(x,y,player) or self.canjumpDownRight(x,y,player))
+                return (self.canjumpUpLeft(x,y,player) or self.canjumpUpRight(x,y,player) or self.canjumpDownRight(x,y,player) or self.canjumpDownLeft(x,y,player))
             else:
                 return False
         elif(player == p2):
             if sourcePiece == p2RegPiece :
                 return (self.canjumpUpLeft(x,y,player) or self.canjumpUpRight(x,y,player))
             elif sourcePiece == p2KingPiece :
-                return (self.canjumpUpLeft(x,y,player) or self.canjumpUpRight(x,y,player) or self.canjumpDownRight(x,y,player) or self.canjumpDownRight(x,y,player))
+                return (self.canjumpUpLeft(x,y,player) or self.canjumpUpRight(x,y,player) or self.canjumpDownRight(x,y,player) or self.canjumpDownLeft(x,y,player))
             else:
                 return False
         else:

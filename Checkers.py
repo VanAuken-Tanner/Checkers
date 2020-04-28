@@ -3,7 +3,6 @@ isRunning_g = False
 
 #TODO
 #contiune with local branch from https://www.youtube.com/watch?v=HVsySz-h9r4 @time 22:28
-#player one does not have a proper king check for jumps
 #fix naming collision with player one and player two
 
 validCharcters = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z']
